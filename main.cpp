@@ -9,6 +9,11 @@ int main(){
 /*
   Ide:
     - buat login : deskripsi deskripsi deskripsi
-    - ide 2 : deskripsi deskripsi deskripsi
-    - ide 3 : deskripsi deskripsi deskripsi
+    - buat log out : deskripsi deskripsi deskripsi
+    - exit
+    - menambhakan produk : deskripsi deskripsi deskripsi
+    - melihat produck
+    - mengupdate 
+    - menghapus
+    - mencari
 */
