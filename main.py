@@ -24,6 +24,7 @@ Idea:
 """
 
 import csv
+import pandas as pd
 
 class Item:
     def __init__(self, id, name, price, quantity, description):
@@ -37,6 +38,13 @@ class Item:
         return f"ID: {self.id}, Name: {self.name}, Price: {self.price}, Quantity: {self.quantity}, Description: {self.description} Is successfully added!"
 
 file_path = 'items.csv'
+
+"""
+To be tested
+def create_id():
+  file = pd.read_csv("items.csv")
+  df=pd.DataFrame(file.iloc[-1:,:].values)
+  print(df)"""
 
 def initialize_csv():
     with open(file_path, mode='a', newline='') as file:
