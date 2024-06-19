@@ -1,12 +1,4 @@
-#include <iostream>
-
-using namespace std;
-
-int main(){
-  return 0;
-}
-
-/*
+"""
   Ide:
     - buat login : deskripsi deskripsi deskripsi
     - buat log out : deskripsi deskripsi deskripsi
@@ -16,4 +8,6 @@ int main(){
     - mengupdate 
     - menghapus
     - mencari
-*/
+"""
+
+print(f"Hi mom")
