@@ -1,6 +1,7 @@
 """
 Idea:
   # Create 
+    def create_item(): Untuk membuka penjualan item
     def add_item(name, price, quantity, description): first read the last id on csv then continue with id + 1, save to csd
   # Read
     def read(id): print name & price & quantitiy & description
@@ -51,6 +52,14 @@ def initialize_csv():
         writer = csv.writer(file)
         writer.writerow(['id', 'name', 'price', 'quantity', 'description'])
 
+#menambahkan atau membuat item baru untuk dijual
+def create_item():
+    name = input("Enter the item name: ")
+    price = int(input("Enter the item price:Rp.  "))
+    quantity = int(input("Enter the item quantity: "))
+    description = input("Enter the item description: ")
+    add_item(name, price, quantity, description)
+  
 def read_items():
     items = []
     try:
@@ -168,3 +177,6 @@ def search_item(query):
 
 # Inisialisasi CSV jika belum ada
 initialize_csv()
+
+#Menjalankan fungsi:
+print("Selamat Datang di 
