@@ -1,11 +1,11 @@
 """
 Idea:
   # Create 
-    def add_item(name, price): first read the last id on csv then continue with id + 1, save to csd
+    def add_item(name, price, quantity, description): first read the last id on csv then continue with id + 1, save to csd
   # Read
-    def read(id): print name & price & description
+    def read(id): print name & price & quantitiy & description
   # Update
-    def update(id): prompt("name: " & "price: " & description), leave empty to not change
+    def update(id): prompt("name: " & "price: " & "quantity: " & "description: "), leave empty to not change
   # Delete
     def delete(id): delete item from csv
 
@@ -13,6 +13,7 @@ Idea:
     class item:
       name > string
       price > integer
+      quantity > integer
       description > string
       id > string
       
