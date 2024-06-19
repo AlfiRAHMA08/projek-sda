@@ -27,14 +27,14 @@ import csv
 
 class Item:
     def __init__(self, id, name, price, quantity, description):
-        self.id = id
         self.name = name
         self.price = price
         self.quantity = quantity
         self.description = description
+        self.id = id
 
     def __str__(self):
-        return f"ID: {self.id}, Name: {self.name}, Price: {self.price}, Quantity: {self.quantity}, Description: {self.description}"
+        return f"ID: {self.id}, Name: {self.name}, Price: {self.price}, Quantity: {self.quantity}, Description: {self.description} Is successfully added!"
 
 file_path = 'items.csv'
 
