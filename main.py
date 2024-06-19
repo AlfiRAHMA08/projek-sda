@@ -25,94 +25,138 @@ Idea:
 
 import csv
 
-class Product:
-    def __init__(self, product_id, name, price, quantity):
-        self.product_id = product_id
+class Item:
+    def __init__(self, id, name, price, quantity, description):
+        self.id = id
         self.name = name
         self.price = price
         self.quantity = quantity
+        self.description = description
 
     def __str__(self):
-        return f"{self.product_id},{self.name},{self.price},{self.quantity}"
+        return f"ID: {self.id}, Name: {self.name}, Price: {self.price}, Quantity: {self.quantity}, Description: {self.description}"
 
-class ECommercePlatform:
-    def __init__(self):
-        self.products = []
+file_path = 'items.csv'
 
-    def add_product(self, product):
-        self.products.append(product)
+def initialize_csv():
+    with open(file_path, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['id', 'name', 'price', 'quantity', 'description'])
 
-    def read_products(self):
-        for product in self.products:
-            print(product)
-
-    def update_product(self, product_id, name=None, price=None, quantity=None):
-        for product in self.products:
-            if product.product_id == product_id:
-                if name:
-                    product.name = name
-                if price:
-                    product.price = price
-                if quantity:
-                    product.quantity = quantity
-                return True
-        return False
-
-    def delete_product(self, product_id):
-        for product in self.products:
-            if product.product_id == product_id:
-                self.products.remove(product)
-                return True
-        return False
-
-    def sort_products(self):
-        self.products.sort(key=lambda x: x.name)
-
-    def search_product(self, product_id):
-        for product in self.products:
-            if product.product_id == product_id:
-                return product
-        return None
-
-    def import_csv(self, filename):
-        with open(filename, newline='') as csvfile:
-            reader = csv.reader(csvfile)
-            next(reader)  
+def read_items():
+    items = []
+    try:
+        with open(file_path, mode='r', newline='') as file:
+            reader = csv.DictReader(file)
             for row in reader:
-                product_id, name, price, quantity = row
-                product = Product(product_id, name, float(price), int(quantity))
-                self.add_product(product)
+                items.append(Item(row['id'], row['name'], int(row['price']), int(row['quantity']), row['description']))
+    except FileNotFoundError:
+        pass
+    return items
 
-def main():
-    platform = ECommercePlatform()
+def save_items(items):
+    with open(file_path, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['id', 'name', 'price', 'quantity', 'description'])
+        for item in items:
+            writer.writerow([item.id, item.name, item.price, item.quantity, item.description])
 
-    while True:
-        print("\n1. Add Product")
-        print("2. View Products")
-        print("3. Update Product")
-        print("4. Delete Product")
-        print("5. Sort Products")
-        print("6. Search Product")
-        print("7. Import Products from CSV")
-        print("8. Exit")
+def add_item(name, price, quantity, description):
+    items = read_items()
+    if items:
+        last_id = int(items[-1].id)
+        new_id = last_id + 1
+    else:
+        new_id = 1
 
-        choice = input("Enter choice: ")
+    new_item = Item(new_id, name, price, quantity, description)
+    items.append(new_item)
+    save_items(items)
+    print(f"Item added successfully with ID: {new_id}")
 
-        if choice == '1':
-            product_id = input("Enter product ID: ")
-            name = input("Enter product name: ")
-            price = float(input("Enter product price: "))
-            quantity = int(input("Enter product quantity: "))
-            product = Product(product_id, name, price, quantity)
-            platform.add_product(product)
-            print("Product added successfully.")
-        
-        elif choice == '2':
-            platform.read_products()
-        
-        elif choice == '3:
+def read_item(id):
+    items = read_items()
+    for item in items:
+        if item.id == id:
+            print(item)
+            return
+    print(f"Item with ID {id} not found")
 
-if __name__ == "__main__":
-    main()
-  
-print(f"Hi mom")
+def update_item(id, name=None, price=None, quantity=None, description=None):
+    items = read_items()
+    updated = False
+    for item in items:
+        if item.id == id:
+            if name:
+                item.name = name
+            if price:
+                item.price = price
+            if quantity:
+                item.quantity = quantity
+            if description:
+                item.description = description
+            updated = True
+            break
+    if updated:
+        save_items(items)
+        print(f"Item with ID {id} updated successfully")
+    else:
+        print(f"Item with ID {id} not found")
+
+def delete_item(id):
+    items = read_items()
+    updated_items = [item for item in items if item.id != id]
+    if len(updated_items) < len(items):
+        save_items(updated_items)
+        print(f"Item with ID {id} deleted successfully")
+    else:
+        print(f"Item with ID {id} not found")
+
+def sort_by_price():
+    items = read_items()
+    sorted_items = sorted(items, key=lambda x: x.price)
+    for item in sorted_items:
+        print(item)
+
+# Keranjang belanja
+cart = []
+
+def add_to_cart(item_id):
+    items = read_items()
+    for item in items:
+        if item.id == item_id:
+            cart.append(item)
+            print(f"{item.name} added to cart")
+            return
+    print(f"Item with ID {item_id} not found")
+
+def check_out():
+    total_price = sum(item.price for item in cart)
+    print("Cart:")
+    for item in cart:
+        print(item)
+    print(f"Total Price: {total_price}")
+    confirm = input("Confirm order (yes/no): ")
+    if confirm.lower() == 'yes':
+        print("Order confirmed! Receipt:")
+        for item in cart:
+            print(item)
+        print(f"Total Price: {total_price}")
+        cart.clear()
+    else:
+        print("Order cancelled")
+
+def search_item(query):
+    items = read_items()
+    found_items = []
+    for item in items:
+        if query.lower() in item.name.lower() or query == str(item.id) or query == str(item.price):
+            found_items.append(item)
+    if found_items:
+        for item in found_items:
+            print(item)
+    else:
+        print("No items found matching the query")
+
+# Inisialisasi CSV jika belum ada
+initialize_csv()
