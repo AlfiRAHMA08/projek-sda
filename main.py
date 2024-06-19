@@ -1,14 +1,27 @@
 """
-  Ide:
-    - buat login : deskripsi deskripsi deskripsi
-    - buat log out : deskripsi deskripsi deskripsi
-    - exit
-    - menambhakan produk : deskripsi deskripsi deskripsi
-    - melihat produck
-    - mengupdate 
-    - menghapus
-    - mencari
+Idea:
+  # Create 
+    def add_item(name, price): first read the last id on csv then continue with id + 1, save to csd
+  # Read
+    def read(id): print name & price & description
+  # Update
+    def update(id): prompt("name: " & "price: " & description), leave empty to not change
+  # Delete
+    def delete(id): delete item from csv
+
+  # Others:
+    class item:
+      name > string
+      price > integer
+      description > string
+      id > string
+      
+    def sort_by_price() use quick sort
+    def add_to_cart() > add to list
+    def check_out() > show total price, confirm order, show receipt
+    def search_item(name/price/id) > use binary search
 """
+
 import csv
 
 class Product:
