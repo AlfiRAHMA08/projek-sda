@@ -149,3 +149,62 @@ def showAllItems():
         messagebox.showerror("Error", "The file 'data.csv' does not exist.")
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {e}")
+
+    # Fungsi untuk menambahkan item melalui GUI
+def guiAddItem():
+    name = simpledialog.askstring("Input", "Enter name:")
+    if not name:
+        return
+    price = simpledialog.askstring("Input", "Enter price:")
+    if not price:
+        return
+    quantity = simpledialog.askstring("Input", "Enter quantity:")
+    if not quantity:
+        return
+    description = simpledialog.askstring("Input", "Enter description:")
+    if not description:
+        return
+    addItem(name, price, quantity, description)
+
+# Fungsi untuk memperbarui item melalui GUI
+def guiUpdateItem():
+    item_id = simpledialog.askinteger("Input", "Enter item ID to update:")
+    if item_id is None:
+        return
+    name = simpledialog.askstring("Input", "Enter new name (leave blank to keep current):")
+    price = simpledialog.askstring("Input", "Enter new price (leave blank to keep current):")
+    quantity = simpledialog.askstring("Input", "Enter new quantity (leave blank to keep current):")
+    description = simpledialog.askstring("Input", "Enter new description (leave blank to keep current):")
+    updateItem(item_id, name, price, quantity, description)
+
+# Fungsi untuk mencari item melalui GUI
+def guiSearchItem():
+    item_id = simpledialog.askstring("Input", "Enter item ID to search:")
+    if not item_id:
+        return
+    searchItem(item_id)
+
+# Fungsi untuk menghapus item melalui GUI
+def guiDeleteItem():
+    item_id = simpledialog.askinteger("Input", "Enter item ID to delete:")
+    if item_id is None:
+        return
+    deleteItem(item_id)
+
+# Fungsi untuk keluar dari aplikasi
+def guiExit():
+    root.destroy()
+
+# Membuat GUI
+root = tk.Tk()
+root.title("Inventory Management System")
+
+tk.Button(root, text="Add Item", command=guiAddItem).pack(pady=10)
+tk.Button(root, text="Update Item", command=guiUpdateItem).pack(pady=10)
+tk.Button(root, text="Search Item", command=guiSearchItem).pack(pady=10)
+tk.Button(root, text="Delete Item", command=guiDeleteItem).pack(pady=10)
+tk.Button(root, text="Show All Items", command=showAllItems).pack(pady=10)
+tk.Button(root, text="Clear All Items", command=clear).pack(pady=10)
+tk.Button(root, text="Exit", command=guiExit).pack(pady=10)
+
+root.mainloop()
